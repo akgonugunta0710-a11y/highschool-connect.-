@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Highschool Connect</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{beige:'#F4EEE3',sand:'#E8DFCE',line:'#D6CBB6',ink:'#161513'},fontFamily:{serif:['Georgia','"Times New Roman"','serif']}}}}
+</script>
+<style>
+  body{font-family:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  :focus-visible{outline:3px solid #161513;outline-offset:3px}
+  .fade{animation:fade .3s ease both}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .dot{animation:b 1s infinite}.dot:nth-child(2){animation-delay:.15s}.dot:nth-child(3){animation-delay:.3s}
+  @keyframes b{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-4px)}}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body class="bg-beige text-ink antialiased">
+<a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:z-[100] focus:bg-white focus:p-3">Skip to content</a>
+
+<header class="sticky top-0 z-50 bg-beige/90 backdrop-blur border-b border-line">
+  <nav class="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between" aria-label="Main">
+    <a href="#home" class="font-serif text-xl font-bold tracking-tight">Highschool Connect</a>
+    <ul class="hidden md:flex gap-8 text-sm font-medium">
+      <li><a class="hover:underline underline-offset-4" href="#home">Home</a></li>
+      <li><a class="hover:underline underline-offset-4" href="#opportunities">Find Opportunities</a></li>
+      <li><a class="hover:underline underline-offset-4" href="#assistant">AI Assistant</a></li>
+      <li><a class="hover:underline underline-offset-4" href="#safety">Safety &amp; Ethics</a></li>
+      <li><a class="hover:underline underline-offset-4" href="#feedback">Feedback</a></li>
+    </ul>
+    <button id="menuBtn" class="md:hidden px-3 py-1.5 border border-ink rounded-full text-sm" aria-expanded="false" aria-controls="mobileMenu">Menu</button>
+  </nav>
+  <div id="mobileMenu" class="hidden md:hidden border-t border-line px-5 py-3 space-y-2 text-sm font-medium">
+    <a class="block py-1 mobile-link" href="#home">Home</a>
+    <a class="block py-1 mobile-link" href="#opportunities">Find Opportunities</a>
+    <a class="block py-1 mobile-link" href="#assistant">AI Assistant</a>
+    <a class="block py-1 mobile-link" href="#safety">Safety &amp; Ethics</a>
+    <a class="block py-1 mobile-link" href="#feedback">Feedback</a>
+  </div>
+</header>
+
+<main id="main">
+<section id="home" class="max-w-6xl mx-auto px-5 pt-20 pb-24 grid md:grid-cols-5 gap-12 items-end">
+  <div class="md:col-span-3">
+    <p class="text-sm font-semibold uppercase tracking-widest text-ink/60">For students in grades 9–12</p>
+    <h1 class="font-serif text-4xl md:text-6xl font-bold leading-[1.05] mt-4">Bridge the Gap Between High School &amp; Your Future Career</h1>
+    <p class="mt-6 text-lg text-ink/75 max-w-xl">Most job boards filter you out for not being in college. We collect real internships, research programs, volunteering and mentors that welcome high schoolers, so you can try a career before you pick one.</p>
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href="#opportunities" class="bg-ink text-beige font-semibold px-6 py-3 rounded-full hover:bg-ink/85">Find Opportunities</a>
+      <a href="#assistant" class="border border-ink font-semibold px-6 py-3 rounded-full hover:bg-ink hover:text-beige">Try AI Matcher</a>
+    </div>
+  </div>
+  <ol class="md:col-span-2 space-y-3 text-sm">
+    <li class="bg-sand rounded-2xl p-5 flex gap-4"><span class="font-serif text-2xl font-bold">1</span><span><b>Tell us your interests.</b><br><span class="text-ink/70">Type them or tap a tag.</span></span></li>
+    <li class="bg-sand rounded-2xl p-5 flex gap-4"><span class="font-serif text-2xl font-bold">2</span><span><b>Get matched.</b><br><span class="text-ink/70">Real programs open to high schoolers.</span></span></li>
+    <li class="bg-sand rounded-2xl p-5 flex gap-4"><span class="font-serif text-2xl font-bold">3</span><span><b>Export your tracker.</b><br><span class="text-ink/70">Deadlines and links in a spreadsheet.</span></span></li>
+  </ol>
+</section>
+
+<section id="opportunities" class="border-t border-line">
+  <div class="max-w-6xl mx-auto px-5 py-20">
+    <h2 class="font-serif text-3xl md:text-4xl font-bold">Opportunity Marketplace</h2>
+    <p class="text-ink/70 mt-2 max-w-2xl">Real programs with links to their official pages. Always check current eligibility, age limits and dates on the site.</p>
+    <div class="mt-8 flex flex-wrap gap-3 items-center justify-between">
+      <div id="filters" class="flex flex-wrap gap-2" role="group" aria-label="Filter by category"></div>
+      <label class="sr-only" for="searchBox">Search</label>
+      <input id="searchBox" type="search" placeholder="Search: remote, paid, NASA…" class="w-full sm:w-72 rounded-full border border-line bg-white/60 px-5 py-2.5 text-sm">
+    </div>
+    <div id="grid" class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-5" aria-live="polite"></div>
+    <p id="emptyMsg" class="hidden mt-8 text-center text-ink/60">No matches. Try another filter.</p>
+  </div>
+</section>
+
+<section id="assistant" class="bg-sand border-y border-line">
+  <div class="max-w-4xl mx-auto px-5 py-20">
+    <h2 class="font-serif text-3xl md:text-4xl font-bold">AI Assistant &amp; Matcher</h2>
+    <p class="text-ink/70 mt-2">Tell Connect Buddy what you like. <span class="text-xs">(Prototype: keyword matching, not a live AI model.)</span></p>
+    <div class="mt-8 bg-beige rounded-3xl border border-line overflow-hidden shadow-sm">
+      <div class="bg-ink text-beige px-5 py-3"><p class="font-semibold">Connect Buddy</p><p class="text-xs text-beige/70">Only vetted programs · Chats stay in your browser</p></div>
+      <div id="chat" class="h-[440px] overflow-y-auto p-5 space-y-4" role="log" aria-live="polite" aria-label="Chat"></div>
+      <div class="p-4 border-t border-line space-y-3 bg-white/40">
+        <div id="chips" class="flex flex-wrap gap-2"></div>
+        <form id="chatForm" class="flex gap-2">
+          <label for="chatInput" class="sr-only">Your interests</label>
+          <input id="chatInput" autocomplete="off" placeholder="AI, biology, public policy, creative writing" class="flex-1 rounded-full border border-line bg-white px-5 py-3 text-sm">
+          <button class="bg-ink text-beige font-semibold px-6 rounded-full hover:bg-ink/85">Send</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="safety" class="max-w-6xl mx-auto px-5 py-20">
+  <h2 class="font-serif text-3xl md:text-4xl font-bold">Trust, Safety &amp; Ethics</h2>
+  <p class="text-ink/70 mt-2 max-w-2xl">You should never have to wonder if an opportunity is real or safe.</p>
+  <div class="mt-8 grid md:grid-cols-3 gap-5">
+    <article class="border border-line rounded-2xl p-6 bg-white/50"><p class="text-xs font-bold tracking-widest text-ink/50">01</p><h3 class="font-serif text-xl font-bold mt-2">Company verification</h3><p class="text-sm text-ink/70 mt-2">AI checks registration, website history and contact details to flag scams and pay-to-play programs.</p></article>
+    <article class="border border-line rounded-2xl p-6 bg-white/50"><p class="text-xs font-bold tracking-widest text-ink/50">02</p><h3 class="font-serif text-xl font-bold mt-2">Data privacy</h3><p class="text-sm text-ink/70 mt-2">We collect only what we need, never sell data, and never share it without your consent.</p></article>
+    <article class="border border-line rounded-2xl p-6 bg-white/50"><p class="text-xs font-bold tracking-widest text-ink/50">03</p><h3 class="font-serif text-xl font-bold mt-2">Human review</h3><p class="text-sm text-ink/70 mt-2">Flagged listings get a human check. Every card has a report button.</p></article>
+  </div>
+  <div class="mt-8 flex flex-wrap gap-3 items-center text-sm font-semibold">
+    <span class="border border-ink rounded-full px-4 py-1.5">✔ Verified source</span>
+    <span class="border border-ink rounded-full px-4 py-1.5">Privacy first</span>
+    <span class="border border-ink rounded-full px-4 py-1.5">Human reviewed</span>
+    <button data-open="modelModal" class="ml-auto bg-ink text-beige px-5 py-2 rounded-full hover:bg-ink/85">Read our Model Card</button>
+  </div>
+</section>
+
+<section id="roadmap" class="bg-ink text-beige">
+  <div class="max-w-6xl mx-auto px-5 py-20">
+    <h2 class="font-serif text-3xl md:text-4xl font-bold">Needs &amp; Challenges Roadmap</h2>
+    <div class="mt-8 grid md:grid-cols-3 gap-5">
+      <article class="border border-beige/25 rounded-2xl p-6"><p class="text-xs font-bold tracking-widest text-beige/60">PHASE 1</p><h3 class="font-serif text-xl font-bold mt-1">Create the app</h3><ul class="mt-3 space-y-2 text-sm text-beige/80 list-disc list-inside"><li>Interactive prototype (this site)</li><li>Real AI matching through an LLM API</li><li>Database and submission form</li></ul></article>
+      <article class="border border-beige/25 rounded-2xl p-6"><p class="text-xs font-bold tracking-widest text-beige/60">PHASE 2</p><h3 class="font-serif text-xl font-bold mt-1">Free hosting &amp; launch</h3><ul class="mt-3 space-y-2 text-sm text-beige/80 list-disc list-inside"><li>GitHub Pages, Netlify, Vercel or Cloudflare Pages</li><li>Free tiers: Supabase or Firebase</li><li>Low-cost custom domain</li></ul></article>
+      <article class="border border-beige/25 rounded-2xl p-6"><p class="text-xs font-bold tracking-widest text-beige/60">PHASE 3</p><h3 class="font-serif text-xl font-bold mt-1">User acquisition</h3><ul class="mt-3 space-y-2 text-sm text-beige/80 list-disc list-inside"><li>Counselors, clubs and teachers</li><li>TikTok and Instagram content</li><li>Peer ambassadors and referrals</li></ul></article>
+    </div>
+  </div>
+</section>
+
+<section id="feedback" class="max-w-2xl mx-auto px-5 py-20">
+  <h2 class="font-serif text-3xl md:text-4xl font-bold">Tell us what you think</h2>
+  <p class="text-ink/70 mt-2">High schooler? Your ideas decide what we build next.</p>
+  <form id="fbForm" class="mt-8 border border-line bg-white/50 rounded-3xl p-6 space-y-5" novalidate>
+    <div><label for="fbName" class="block text-sm font-semibold mb-1">Name or nickname (optional)</label><input id="fbName" class="w-full rounded-xl border border-line bg-white px-4 py-2.5"></div>
+    <div><label for="fbGrade" class="block text-sm font-semibold mb-1">Grade</label><select id="fbGrade" class="w-full rounded-xl border border-line bg-white px-4 py-2.5"><option>9th</option><option>10th</option><option>11th</option><option>12th</option><option>Other</option></select></div>
+    <fieldset><legend class="text-sm font-semibold mb-2">Features you want</legend>
+      <div class="flex flex-wrap gap-4 text-sm"><label class="flex items-center gap-2"><input type="checkbox" name="feat" value="Mentor matching"> Mentor matching</label><label class="flex items-center gap-2"><input type="checkbox" name="feat" value="Calendar sync"> Calendar sync</label><label class="flex items-center gap-2"><input type="checkbox" name="feat" value="Application help"> Application help</label><label class="flex items-center gap-2"><input type="checkbox" name="feat" value="Mobile app"> Mobile app</label></div></fieldset>
+    <div><label for="fbMsg" class="block text-sm font-semibold mb-1">Feedback or feature request *</label><textarea id="fbMsg" rows="4" required class="w-full rounded-xl border border-line bg-white px-4 py-2.5"></textarea><p id="fbErr" class="hidden text-red-700 text-sm mt-1" role="alert">Please write a quick message first.</p></div>
+    <button class="bg-ink text-beige font-semibold px-6 py-3 rounded-full hover:bg-ink/85">Submit feedback</button>
+    <p id="fbOk" class="hidden font-semibold" role="status">Thanks! Saved locally in this prototype.</p>
+  </form>
+</section>
+</main>
+
+<footer class="bg-ink text-beige/80">
+  <div class="max-w-6xl mx-auto px-5 py-12 grid md:grid-cols-3 gap-8 text-sm">
+    <div><p class="font-serif text-xl text-beige font-bold">Highschool Connect</p><p class="mt-2">Created by Marwa, Marwane, Akshara, Tvisha, Ashwika, &amp; Sreenidhi</p><p class="mt-1 text-beige/50">Launchpad Bootcamp project</p></div>
+    <div><p class="text-beige font-semibold">Team</p><ul class="mt-2 space-y-1"><li><a class="underline" href="#roadmap">Team notes &amp; roadmap</a></li><li><a class="underline" href="#safety">Safety &amp; Ethics</a></li></ul></div>
+    <div><p class="text-beige font-semibold">Are you a high schooler?</p><a href="#feedback" class="inline-block mt-3 bg-beige text-ink font-semibold px-5 py-2 rounded-full">Share feedback</a></div>
+  </div>
+</footer>
+
+<div id="modelModal" class="modal hidden fixed inset-0 z-[60] bg-black/60 grid place-items-center p-4" role="dialog" aria-modal="true" aria-labelledby="mmTitle">
+  <div class="bg-beige rounded-2xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6">
+    <div class="flex justify-between"><h3 id="mmTitle" class="font-serif text-2xl font-bold">Model Card: Connect Buddy</h3><button data-close class="text-2xl px-2" aria-label="Close">×</button></div>
+    <dl class="mt-4 space-y-3 text-sm">
+      <div><dt class="font-bold">Purpose</dt><dd class="text-ink/70">Match high school students with eligible opportunities based on their interests.</dd></div>
+      <div><dt class="font-bold">Data used</dt><dd class="text-ink/70">Only the interests you type and the public listing database. No grades, ID or location.</dd></div>
+      <div><dt class="font-bold">Verification</dt><dd class="text-ink/70">Programs are checked for legitimacy, high school eligibility and no student-paid fees.</dd></div>
+      <div><dt class="font-bold">Limitations</dt><dd class="text-ink/70">AI can be wrong. Confirm details with the organization and a trusted adult. Deadlines change yearly.</dd></div>
+      <div><dt class="font-bold">Fairness</dt><dd class="text-ink/70">We favor free or paid programs so money is never a barrier.</dd></div>
+      <div><dt class="font-bold">Prototype note</dt><dd class="text-ink/70">This demo uses simple keyword matching, not a live model.</dd></div>
+    </dl>
+  </div>
+</div>
+
+<div id="trackerModal" class="modal hidden fixed inset-0 z-[60] bg-black/60 grid place-items-center p-4" role="dialog" aria-modal="true" aria-labelledby="tkTitle">
+  <div class="bg-beige rounded-2xl max-w-5xl w-full max-h-[90vh] overflow-y-auto p-6">
+    <div class="flex justify-between"><h3 id="tkTitle" class="font-serif text-2xl font-bold">Your Deadline Tracker</h3><button data-close class="text-2xl px-2" aria-label="Close">×</button></div>
+    <p class="text-sm text-ink/60 mt-1">Typical application windows, sorted by what comes up next. Confirm exact dates on each site.</p>
+    <div class="overflow-x-auto mt-4"><table class="w-full text-sm text-left">
+      <thead class="border-b-2 border-ink"><tr><th class="p-2">Typical deadline</th><th class="p-2">Program</th><th class="p-2">Location</th><th class="p-2">Type</th><th class="p-2">Pay</th><th class="p-2">Link</th></tr></thead>
+      <tbody id="trackerBody"></tbody></table></div>
+    <div class="mt-5 flex flex-wrap gap-3 items-center">
+      <button id="dlCsv" class="bg-ink text-beige font-semibold px-5 py-2 rounded-full">Download CSV</button>
+      <button id="copyCsv" class="border border-ink font-semibold px-5 py-2 rounded-full">Copy as text</button>
+      <span id="trackerMsg" class="text-sm" role="status"></span>
+    </div>
+  </div>
+</div>
+
+<script>
+// m = month of typical deadline (1-12). Links point to official program pages.
+const OPPS=[
+ {cat:'STEM',type:'Research',title:'Research Science Institute (RSI)',org:'Center for Excellence in Education / MIT',loc:'Cambridge, MA (in person)',pay:'Free',when:'Typically Dec–Jan',m:12,url:'https://www.cee.org/research-science-institute',desc:'Free six-week research program for top rising seniors.',tags:['High School Eligible','Free','In-Person'],kw:['research','science','math','engineering','stem','ai','physics','coding']},
+ {cat:'STEM',type:'Research',title:'Stanford SIMR',org:'Stanford School of Medicine',loc:'Stanford, CA',pay:'Free',when:'Typically Feb–Mar',m:2,url:'https://simr.stanford.edu',desc:'Summer research in biomedical science with Stanford mentors.',tags:['High School Eligible','In-Person','Free'],kw:['biology','medicine','health','biotech','research','science','lab','chemistry']},
+ {cat:'STEM',type:'Internship',title:'NIH Summer Internship Program',org:'National Institutes of Health',loc:'Bethesda, MD and other sites',pay:'Stipend',when:'Typically Jan–Mar',m:1,url:'https://www.training.nih.gov/programs/sip',desc:'Paid lab internships for students 16+ at the NIH.',tags:['High School Eligible','Stipend','In-Person'],kw:['biology','medicine','health','science','research','lab','biotech','chemistry']},
+ {cat:'STEM',type:'Internship',title:'NASA Internships (high school)',org:'NASA',loc:'Centers nationwide and remote',pay:'Stipend',when:'Typically by term: Feb, Jun, Oct',m:2,url:'https://intern.nasa.gov',desc:'Paid project-based internships in space, engineering and data.',tags:['High School Eligible','Stipend','Remote'],kw:['space','engineering','coding','science','ai','data','physics','robotics','technology']},
+ {cat:'STEM',type:'Program',title:'AI4ALL',org:'AI4ALL',loc:'Online and campus programs',pay:'Free',when:'Typically Spring',m:3,url:'https://ai4all.org',desc:'Free AI learning programs and projects for high schoolers.',tags:['High School Eligible','Free','Remote'],kw:['ai','machine learning','coding','computer science','data','technology']},
+ {cat:'STEM',type:'Program',title:'Girls Who Code',org:'Girls Who Code',loc:'Online and local clubs',pay:'Free',when:'Rolling / Spring',m:4,url:'https://girlswhocode.com',desc:'Free coding clubs and summer programs.',tags:['High School Eligible','Free','Remote'],kw:['coding','computer science','programming','technology','ai','engineering']},
+ {cat:'STEM',type:'Volunteering',title:'Student Conservation Association',org:'SCA',loc:'National parks and cities, USA',pay:'Stipend',when:'Typically Jan–Mar',m:1,url:'https://www.thesca.org',desc:'Hands-on conservation crews and internships for teens.',tags:['High School Eligible','Stipend','In-Person'],kw:['environment','climate','sustainability','outdoors','science','nature']},
+ {cat:'Humanities',type:'Program',title:'Close Up Washington',org:'Close Up Foundation',loc:'Washington, DC',pay:'Fee; aid available',when:'Rolling',m:5,url:'https://www.closeup.org',desc:'Civics programs in DC, meeting lawmakers and visiting landmarks.',tags:['High School Eligible','In-Person','Aid'],kw:['public policy','policy','government','politics','civics','law','history','debate']},
+ {cat:'Humanities',type:'Internship',title:'Smithsonian Internships',org:'Smithsonian Institution',loc:'Washington, DC and remote',pay:'Varies',when:'Varies by unit',m:3,url:'https://www.si.edu/ofi/internships',desc:'Museum, history and research internships; check age requirements per unit.',tags:['Check Eligibility','Remote','In-Person'],kw:['history','museum','culture','research','writing','art','science']},
+ {cat:'Humanities',type:'Contest',title:'Scholastic Art & Writing Awards',org:'Alliance for Young Artists & Writers',loc:'Online submission, USA',pay:'Free',when:'Typically Dec',m:12,url:'https://www.artandwriting.org',desc:'The top national recognition for teen writers and artists.',tags:['High School Eligible','Free','Remote'],kw:['creative writing','writing','poetry','art','journalism','english','storytelling']},
+ {cat:'Humanities',type:'Volunteering',title:'VolunteerMatch',org:'VolunteerMatch',loc:'Search by your zip code',pay:'Service hours',when:'Rolling',m:11,url:'https://www.volunteermatch.org',desc:'Find local and virtual volunteering; filter for teen-friendly roles.',tags:['Service Hours','Remote','In-Person'],kw:['volunteering','community','teaching','service','public policy','writing','health']},
+ {cat:'Humanities',type:'Volunteering',title:'DoSomething',org:'DoSomething.org',loc:'Online',pay:'Free',when:'Rolling',m:11,url:'https://www.dosomething.org',desc:'Social-change campaigns you can join from home.',tags:['High School Eligible','Free','Remote'],kw:['community','service','public policy','activism','volunteering','leadership']},
+ {cat:'Business',type:'Program',title:'NFTE Young Entrepreneurs',org:'NFTE',loc:'Schools and online',pay:'Free',when:'Rolling',m:9,url:'https://www.nfte.com',desc:'Entrepreneurship training and pitch competitions.',tags:['High School Eligible','Free','Remote'],kw:['business','entrepreneurship','startup','marketing','finance','leadership']},
+ {cat:'Business',type:'Program',title:'Junior Achievement',org:'JA USA',loc:'Local chapters, USA',pay:'Free',when:'Rolling',m:9,url:'https://www.juniorachievement.org',desc:'Business and finance programs, job shadowing and competitions.',tags:['High School Eligible','Free','In-Person'],kw:['business','finance','economics','entrepreneurship','leadership','marketing','banking']},
+ {cat:'Business',type:'Internship',title:'Bank of America Student Leaders',org:'Bank of America',loc:'Local cities, USA',pay:'Paid',when:'Typically Jan',m:1,url:'https://about.bankofamerica.com/en/making-an-impact/student-leaders',desc:'Paid summer internship with a local nonprofit plus a leadership summit.',tags:['High School Eligible','Stipend','In-Person'],kw:['business','finance','leadership','community','nonprofit','public policy','service']},
+ {cat:'Arts',type:'Program',title:'YoungArts',org:'National YoungArts Foundation',loc:'Online and Miami, FL',pay:'Free to apply',when:'Typically Oct',m:10,url:'https://youngarts.org',desc:'Awards, mentorship and workshops for teen artists and writers.',tags:['High School Eligible','Remote','Free'],kw:['art','music','dance','theater','creative writing','writing','design','film','performing arts']},
+ {cat:'Arts',type:'Program',title:'Kode With Klossy',org:'Kode With Klossy',loc:'Online and in person',pay:'Free (scholarships)',when:'Typically Winter',m:1,url:'https://www.kodewithklossy.com',desc:'Coding camps with a creative angle; design, apps and web.',tags:['High School Eligible','Free','Remote'],kw:['coding','design','technology','ui','creative','programming','art']},
+ {cat:'Arts',type:'Community',title:'Hack Club',org:'Hack Club',loc:'Online and local clubs',pay:'Free',when:'Rolling',m:11,url:'https://hackclub.com',desc:'Teen-run coding community with projects, hackathons and grants.',tags:['High School Eligible','Free','Remote'],kw:['coding','design','technology','creative','programming','music','ai','art']}
+];
+const nowM=new Date().getMonth()+1;
+const ahead=o=>(o.m-nowM+12)%12;
+const CATS=['All','STEM','Humanities','Business','Arts'];
+
+function card(o,score){
+  const el=document.createElement('article');
+  el.className='fade bg-white/60 border border-line rounded-2xl p-5 flex flex-col hover:border-ink transition';
+  const top=document.createElement('div');top.className='flex justify-between text-xs font-bold uppercase tracking-wider text-ink/55';
+  top.innerHTML='<span></span><span></span>';top.children[0].textContent=o.cat;top.children[1].textContent=o.type;
+  const h=document.createElement('h3');h.className='font-serif text-xl font-bold mt-3 leading-snug';h.textContent=o.title;
+  const org=document.createElement('p');org.className='text-sm text-ink/60';org.textContent=o.org;
+  const d=document.createElement('p');d.className='text-sm text-ink/80 mt-3 flex-1';d.textContent=o.desc;
+  const tags=document.createElement('div');tags.className='flex flex-wrap gap-1.5 mt-4';
+  o.tags.forEach(t=>{const s=document.createElement('span');s.className='text-xs font-semibold border border-ink/30 rounded-full px-2.5 py-0.5';s.textContent=t;tags.appendChild(s)});
+  const meta=document.createElement('p');meta.className='text-xs text-ink/70 mt-4 space-y-1';
+  meta.innerHTML='<span class="block">📍 <span class="l"></span></span><span class="block">⏰ <span class="w"></span></span>';
+  meta.querySelector('.l').textContent=o.loc;meta.querySelector('.w').textContent=o.when;
+  el.append(top,h,org,d,tags,meta);
+  if(score){const m=document.createElement('p');m.className='mt-2 text-xs font-bold';m.textContent='Match: '+score+'%';el.appendChild(m)}
+  const row=document.createElement('div');row.className='mt-4 flex items-center justify-between';
+  const a=document.createElement('a');a.href=o.url;a.target='_blank';a.rel='noopener noreferrer';a.className='bg-ink text-beige text-sm font-semibold px-4 py-2 rounded-full hover:bg-ink/85';a.textContent='Visit official page ↗';a.setAttribute('aria-label','Visit official page for '+o.title+' (opens in new tab)');
+  const r=document.createElement('button');r.className='text-xs text-ink/50 underline hover:text-red-700';r.textContent='Report';r.onclick=()=>{r.textContent='Reported';r.disabled=true};
+  row.append(a,r);el.appendChild(row);return el;
+}
+
+let active='All';
+const filters=document.getElementById('filters');
+CATS.forEach(c=>{const b=document.createElement('button');b.textContent=c;b.dataset.c=c;b.onclick=()=>{active=c;renderGrid()};filters.appendChild(b)});
+function renderGrid(){
+  const q=document.getElementById('searchBox').value.trim().toLowerCase();
+  [...filters.children].forEach(b=>{const on=b.dataset.c===active;b.setAttribute('aria-pressed',on);
+    b.className='px-5 py-2 rounded-full text-sm font-semibold border transition '+(on?'bg-ink text-beige border-ink':'border-ink/30 hover:border-ink')});
+  const g=document.getElementById('grid');g.innerHTML='';
+  const list=OPPS.filter(o=>(active==='All'||o.cat===active)&&(!q||(o.title+o.org+o.desc+o.loc+o.pay+o.tags.join(' ')+o.kw.join(' ')).toLowerCase().includes(q)));
+  list.forEach(o=>g.appendChild(card(o)));
+  document.getElementById('emptyMsg').classList.toggle('hidden',list.length>0);
+}
+document.getElementById('searchBox').addEventListener('input',renderGrid);renderGrid();
+
+// CHAT
+const chat=document.getElementById('chat'),input=document.getElementById('chatInput');let last=[];
+['AI','Biology','Public Policy','Creative Writing','Business','Design','Music','Environment','Finance','Coding'].forEach(t=>{
+  const b=document.createElement('button');b.type='button';b.textContent='+ '+t;
+  b.className='text-sm border border-ink/30 rounded-full px-3 py-1 hover:bg-ink hover:text-beige';
+  b.onclick=()=>{const c=input.value.trim();if(!c.toLowerCase().split(/\s*,\s*/).includes(t.toLowerCase()))input.value=c?c+', '+t:t;input.focus()};
+  document.getElementById('chips').appendChild(b)});
+function bubble(t,who){const w=document.createElement('div');w.className='fade flex '+(who==='user'?'justify-end':'');
+  const b=document.createElement('div');b.className='max-w-[85%] rounded-2xl px-4 py-2 text-sm '+(who==='user'?'bg-ink text-beige':'bg-white border border-line');
+  b.textContent=t;w.appendChild(b);chat.appendChild(w);chat.scrollTop=chat.scrollHeight}
+function match(text){
+  const terms=text.toLowerCase().split(/[,;
+]| and /).map(s=>s.trim()).filter(Boolean);
+  const words=text.toLowerCase().match(/[a-z]+/g)||[];
+  return OPPS.map(o=>{let h=0;terms.forEach(t=>{if(o.kw.some(k=>k===t||k.includes(t)||t.includes(k)))h+=2});
+    words.forEach(w=>{if(w.length>3&&o.kw.some(k=>k.split(' ').includes(w)))h+=1});return{o,h}})
+   .filter(r=>r.h>0).sort((a,b)=>b.h-a.h||ahead(a.o)-ahead(b.o)).slice(0,6).map(r=>({o:r.o,s:Math.min(98,55+r.h*10)}));
+}
+bubble('Hi! I'm Connect Buddy. Tell me what you're into (like "AI, biology, public policy, creative writing") and I'll find real programs open to high schoolers.','bot');
+document.getElementById('chatForm').addEventListener('submit',e=>{
+  e.preventDefault();const text=input.value.trim();if(!text)return;bubble(text,'user');input.value='';
+  const t=document.createElement('div');t.className='flex';
+  t.innerHTML='<div class="bg-white border border-line rounded-2xl px-4 py-3 flex gap-1" aria-label="Typing"><span class="dot w-2 h-2 bg-ink/40 rounded-full"></span><span class="dot w-2 h-2 bg-ink/40 rounded-full"></span><span class="dot w-2 h-2 bg-ink/40 rounded-full"></span></div>';
+  chat.appendChild(t);chat.scrollTop=chat.scrollHeight;
+  setTimeout(()=>{t.remove();const res=match(text);last=res.map(r=>r.o);
+    if(!res.length){bubble('No strong match yet. Try broader interests like science, writing, art, business, coding or policy.','bot');return}
+    bubble('Found '+res.length+' match'+(res.length>1?'es':'')+' for "'+text+'". Best fits first:','bot');
+    const wrap=document.createElement('div');wrap.className='grid sm:grid-cols-2 gap-4 fade';res.forEach(r=>wrap.appendChild(card(r.o,r.s)));chat.appendChild(wrap);
+    const bar=document.createElement('div');bar.className='flex flex-wrap gap-3 items-center fade';
+    const ex=document.createElement('button');ex.className='bg-ink text-beige font-semibold px-5 py-2 rounded-full text-sm';ex.textContent='Export / Generate Deadline Tracker';ex.onclick=openTracker;
+    const n=document.createElement('p');n.className='text-xs text-ink/60';n.textContent='Confirm details with a parent, teacher or counselor before applying.';
+    bar.append(ex,n);chat.appendChild(bar);chat.scrollTop=chat.scrollHeight},800)});
+
+// TRACKER
+const sorted=()=>[...last].sort((a,b)=>ahead(a)-ahead(b));
+function csv(){const e=v=>'"'+String(v).replace(/"/g,'""')+'"';
+  const rows=[['Typical Deadline','Program','Organization','Location','Type','Pay','Link','Status']];
+  sorted().forEach(o=>rows.push([o.when,o.title,o.org,o.loc,o.type,o.pay,o.url,'Not started']));
+  return rows.map(r=>r.map(e).join(',')).join('
+')}
+function openTracker(){
+  const b=document.getElementById('trackerBody');b.innerHTML='';
+  sorted().forEach(o=>{const tr=document.createElement('tr');tr.className='border-b border-line';
+    [o.when,o.title,o.loc,o.type,o.pay].forEach(v=>{const td=document.createElement('td');td.className='p-2';td.textContent=v;tr.appendChild(td)});
+    const td=document.createElement('td');td.className='p-2';const a=document.createElement('a');a.href=o.url;a.target='_blank';a.rel='noopener noreferrer';a.className='underline';a.textContent='Confirm on site ↗';td.appendChild(a);tr.appendChild(td);b.appendChild(tr)});
+  document.getElementById('trackerMsg').textContent='';openModal('trackerModal')}
+document.getElementById('dlCsv').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv()],{type:'text/csv'}));a.download='highschool-connect-deadlines.csv';document.body.appendChild(a);a.click();a.remove();document.getElementById('trackerMsg').textContent='Downloaded. Open in Excel or Google Sheets.'};
+document.getElementById('copyCsv').onclick=async()=>{const m=document.getElementById('trackerMsg');try{await navigator.clipboard.writeText(csv());m.textContent='Copied.'}catch{m.textContent='Copy blocked. Use Download.'}};
+
+// MODALS / NAV / FEEDBACK
+let lf=null;
+function openModal(id){lf=document.activeElement;const m=document.getElementById(id);m.classList.remove('hidden');m.querySelector('button').focus()}
+function closeModals(){document.querySelectorAll('.modal').forEach(m=>m.classList.add('hidden'));if(lf)lf.focus()}
+document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>openModal(b.dataset.open));
+document.querySelectorAll('[data-close]').forEach(b=>b.onclick=closeModals);
+document.querySelectorAll('.modal').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModals()}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModals()});
+
+// Mobile menu handler
+const mb=document.getElementById('menuBtn');
+const mm=document.getElementById('mobileMenu');
+mb.addEventListener('click',()=>{
+  const exp=mb.getAttribute('aria-expanded')==='true';
+  mb.setAttribute('aria-expanded',!exp);
+  mm.classList.toggle('hidden');
+});
+document.querySelectorAll('.mobile-link').forEach(link=>{
+  link.addEventListener('click',()=>{
+    mm.classList.add('hidden');
+    mb.setAttribute('aria-expanded','false');
+  });
+});
+
+// Feedback Form handler
+document.getElementById('fbForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  const msg=document.getElementById('fbMsg').value.trim();
+  const err=document.getElementById('fbErr');
+  const ok=document.getElementById('fbOk');
+  if(!msg){
+    err.classList.remove('hidden');
+    ok.classList.add('hidden');
+    return;
+  }
+  err.classList.add('hidden');
+  ok.classList.remove('hidden');
+  e.target.reset();
+});
+</script>
+</body>
+</html>
